@@ -27,12 +27,12 @@ def verifica_numero(msg):
 def cria_indices():
     global indices
     indices = {}
-    for i in range(len(adega["vinho"])):
+    for i in range(len(adega['vinho'])):
         indices[adega['vinho'][i]] = i
     return indices
 
 def remover():
-    item = forca_opcao("Qual vinho voce deseja remover?",adega['vinho'])
+    item = forca_opcao("Qual vinho voce deseja remover?", adega['vinho'])
     indice_item = indices[item]
     for key in adega.keys():
         adega[key].pop(indice_item)
@@ -58,44 +58,42 @@ def atualizar():
         return atualizar()
     return
 
-
 def comprar():
     item = forca_opcao("Qual vinho voce quer comprar?",adega['vinho'])
     indice_item = indices[item]
     for key in adega.keys():
         print(f"{key} : {adega[key][indice_item]}")
-    continuar = forca_opcao(f"Voce vai levar o {item}?",['s','n'])
+    continuar = forca_opcao(f"Voce vai levar o {item}?", ['s','n'])
     if continuar == 's':
         qtd = verifica_numero(f"Quantos {item} voce quer?")
         if qtd <= adega['Estoque'][indice_item]:
             adega['Estoque'][indice_item] -= qtd
             valor = adega['Preco'][indice_item]*qtd
-            carrinho['Valor total'] += valor
+            carrinho['Valor Total'] += valor
             if item in carrinho['Itens'].keys():
                 carrinho['Itens'][item] += qtd
             else:
                 carrinho['Itens'][item] = qtd
         else:
             print(f"Invalido! Nao mais que {adega['Estoque'][indice_item]} no estoque!")
-    continuar = forca_opcao("Voce quer ver mais vinhos ou encerrar?",['mais','encerrar'])
-    if continuar == 'mais':
-        return comprar()
-    return
-
+        continuar = forca_opcao("Voce quer ver mais vinhos ou encerrar?",['mais','encerrar'])
+        if continuar == "mais":
+            return comprar()
+        return
 
 def cadastrar_endereco():
     while True:
-        cep = input("Diga seu cep: ")
+        cep = input("Qual seu cep: ")
         endereco = requests.get(f"https://viacep.com.br/ws/{cep}/json/")
         if endereco.status_code == 200:
             carrinho['Estoque'] = endereco.json()
             return
-        print("Fale um cep Valido!")
+        print("Fale um cep valido!")
 
 carrinho = {
     'Endereco' : {},
     'Itens' : {},
-    "Valor total" : 0
+    "Valor Total" : 0
 }
 
 indices = cria_indices()

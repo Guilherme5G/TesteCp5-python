@@ -1,5 +1,4 @@
 import requests
-from fontTools.varLib import addFeatureVariations
 
 adega = {
     'vinho' : ['Cabernet Sauvignon', 'Merlot', 'Malbec', 'Chardonnay', 'Sauvignon Blanc', 'Rose Piscine'],
